@@ -24,17 +24,35 @@ const saveDataOfUser = async (req, res) => {
     }
 }
 
-const deleteDataOfUser= async(req, res)=>{
-try{
-    const result= await todo.deleteOne({_id:req.body.userId})
-    res.json(result)
-}catch(err){
-    res.json({err:err.message})
+const deleteDataOfUser = async (req, res) => {
+    try {
+        const result = await todo.deleteOne({ _id: req.body.userId })
+        res.json(result)
+    } catch (err) {
+        res.json({ err: err.message })
+    }
+
 }
-  
+
+const updateDataOfUser = async (req, res) => {
+
+    try {
+        const todoRes = await todo.findById(req.params.id);
+        todoRes.type = req.body.type
+        const a1 = await todoRes.save()
+        res.json(a1)
+    } catch (err) {
+        res.status(404).json({ err: err.message })
+    }
+
+
+
+
 }
+
 module.exports = {
     getDataOfUser,
     saveDataOfUser,
+    updateDataOfUser,
     deleteDataOfUser
 }
